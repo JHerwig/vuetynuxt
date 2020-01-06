@@ -1,7 +1,9 @@
 <template>
   <v-app dark>
     <v-app-bar :clipped-left="clipped" fixed app>
-      <v-toolbar-title v-text="title" />
+      <v-btn to="/" text>
+        <v-toolbar-title v-text="title" />
+      </v-btn>
       <v-spacer />
       <v-btn v-for="(item, i) in items" :key="i" :href="item.to" link text>
         <v-icon left> {{ item.icon }} </v-icon> {{ item.title }}
@@ -30,7 +32,7 @@
         </v-col>
         <v-spacer />
         <v-col cols="auto" align-self="center">
-          <span>&copy; 2019</span>
+          <span>Made with <v-icon>mdi-heart</v-icon> &copy; 2020</span>
         </v-col>
       </v-row>
     </v-footer>
