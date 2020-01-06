@@ -1,44 +1,13 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn @click.stop="miniVariant = !miniVariant" icon>
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn @click.stop="clipped = !clipped" icon>
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn @click.stop="fixed = !fixed" icon>
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn @click.stop="rightDrawer = !rightDrawer" icon>
-        <v-icon>mdi-menu</v-icon>
+      <v-btn v-for="(item, i) in items" :key="i" :href="item.to" link text>
+        <v-icon left> {{ item.icon }} </v-icon> {{ item.title }}
+      </v-btn>
+      <v-btn icon>
+        <v-icon>mdi-dots-horizontal</v-icon>
       </v-btn>
     </v-app-bar>
     <v-content>
@@ -46,20 +15,24 @@
         <nuxt />
       </v-container>
     </v-content>
-    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; 2019</span>
+    <v-footer :fixed="fixed" height="1.5em">
+      <v-row align-v="start">
+        <v-col cols="6">
+          <v-btn
+            v-for="(item, i) in footerItems"
+            :key="i"
+            :href="item.to"
+            link
+            text
+          >
+            <v-icon left> {{ item.icon }} </v-icon> {{ item.title }}
+          </v-btn>
+        </v-col>
+        <v-spacer />
+        <v-col cols="auto" align-self="center">
+          <span>&copy; 2019</span>
+        </v-col>
+      </v-row>
     </v-footer>
   </v-app>
 </template>
@@ -83,10 +56,22 @@ export default {
           to: '/inspire'
         }
       ],
+      footerItems: [
+        {
+          icon: 'mdi-apps',
+          to: '/Impressum',
+          title: 'Impressum'
+        },
+        {
+          icon: 'mdi-apps',
+          to: '/privacy_terms',
+          title: 'Datenschutz'
+        }
+      ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'Welcome!'
     }
   }
 }
